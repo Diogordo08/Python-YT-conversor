@@ -58,3 +58,5 @@ label2.pack(pady=10)
 # Iniciar APP
 app.mainloop()
 
+# @Version: 0.0
+# @Author: Diogo Leite
