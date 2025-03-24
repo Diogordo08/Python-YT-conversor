@@ -1,8 +1,7 @@
 # Python-YT-conversor
 Um simples conversor de videos do youtube para MP3 e ou MP4 em python
 ##### READ ME #####
-INSTRUÇÕES:
-caso "Falhe" o download de video
+INSTRUÇÕES: caso "Falhe" o download de video
 - BAIXE https://github.com/BtbN/FFmpeg-Builds/releases
 - EXTRAIA
 - VÁ ATÉ A PASTA BIN, COPIE TODOS OS ARQUIVOS DE DENTRO DELA
@@ -11,6 +10,7 @@ caso "Falhe" o download de video
 
 ####################################
 ####################################
+INSTRUÇÕES: download do arquivo conversor
 - COLOQUE O ARQUIVO .EXE EM UMA PASTA *QUALQUER NOME
 - CLIQUE DUAS VEZES SOBRE O ARQUIVO
 - SELECIONE O TIPO DE ARQUIVO
