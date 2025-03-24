@@ -3,16 +3,19 @@ import customtkinter as ctk
 
 # Funcoes 
 def baixar_video():
+    label3.configure(text="")
+    app.update_idletasks() # Força atualizar a pagina 
+
     url = tb.get()
 
-    if teste.get() == "VIDEO":
+    if cbox.get() == "VIDEO":
         ydl_opts = {
-            'format': 'best',
+            'format': 'bestvideo[height<=1080][vcodec^=avc1][ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]', #[vcodec^=avc1] força a baixar um video com a resolução avc1 ao inves da av1 case possivel
             'outtmpl': 'videos/%(title)s.%(ext)s', 
             'merge_output_format': 'mp4',
         }
 
-    elif teste.get() == "MUSICA":
+    elif cbox.get() == "MUSICA":
         ydl_opts = {
             'format': 'bestaudio/best', 
             'outtmpl': 'musicas/%(title)s.mp3',
@@ -21,42 +24,50 @@ def baixar_video():
     try:
         with yt_dlp.YoutubeDL(ydl_opts) as ydl:
             ydl.download([url])
-        
-        label2.configure(text="SUCESSO", text_color="green")
+
+        label3.configure(text="SUCESSO", text_color="green")
+
     except Exception as e:
-        label2.configure(text="FALHA", text_color="red")
-        print(f"Erro: {e}")
+        label3.configure(text="FALHA", text_color="red")
+
 
 # Config aparencia
-ctk.set_appearance_mode('dark')
+ctk.set_appearance_mode('system')
 
 # Config janela
 app = ctk.CTk()
+app.iconbitmap("icone.ico")
 app.title("DOWNLOAD YT VIDEOS")
 app.geometry("300x300")
+app.resizable(False, False)
 
 # Config camps
+label1 = ctk.CTkLabel(app, text="TIPO DE ARQUIVO")
+label1.pack()
 
-teste = ctk.CTkOptionMenu(app, width=10, height=10, values=["VIDEO", "MUSICA"])
-teste.pack(pady=10)
-# Label
-label1 = ctk.CTkLabel(app, text="COLE SUA URL")
-label1.pack(pady=10)
+cbox = ctk.CTkComboBox(app, width=75, height=15, values=["VIDEO", "MUSICA"])
+cbox.pack(pady=10)
 
-# Entry
+label2 = ctk.CTkLabel(app, text="COLE SUA URL")
+label2.pack()
+
+
 tb = ctk.CTkEntry(app, placeholder_text="URL")
 tb.pack(pady=10)
 
-# Button
-button = ctk.CTkButton(app, text='DOWNLOAD', command=baixar_video)
+
+button = ctk.CTkButton(app, text='DOWNLOAD', command=baixar_video, fg_color="#fa3e25", text_color="#fff", hover_color="#fa5f4b")
 button.pack()
 
-# Label feedback
-label2 = ctk.CTkLabel(app, text="")
-label2.pack(pady=10)
+label3 = ctk.CTkLabel(app, text="")
+label3.pack(pady=10)
+
+
+labelcopy = ctk.CTkLabel(app, text="@Author: DIOGO LEITE \n@Version: 0.1", text_color="#b3b3b3")
+labelcopy.pack()
 
 # Iniciar APP
 app.mainloop()
 
-# @Version: 0.0
+# @Version: 0.1
 # @Author: Diogo Leite
