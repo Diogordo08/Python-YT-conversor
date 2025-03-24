@@ -56,7 +56,7 @@ ctk.set_appearance_mode('system')
 
 # Config janela
 app = ctk.CTk()
-app.iconbitmap("_internal/.icon/icone.ico") # <-- LEMBRAR DE ALTERAR
+# app.iconbitmap("_internal/.icon/icone.ico") # <-- LEMBRAR DE ALTERAR
 app.grid_columnconfigure((0, 1, 2), weight=2, uniform="equal")
 app.title("DOWNLOAD YT VIDEOS")
 app.geometry("320x400")
