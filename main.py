@@ -1,3 +1,4 @@
+import os
 import yt_dlp
 import customtkinter as ctk
 from tkinter import filedialog
@@ -13,6 +14,9 @@ def baixar_video():
     app.update_idletasks() # Força atualizar a pagina 
     pasta_destino = filedialog.askdirectory(title="Selecione a pasta de destino")
 
+    
+    ffmpeg_path = os.path.join(os.path.dirname(__file__), "ffmpeg", "ffmpeg.exe")
+
     url = tb.get()
     
     if cbox.get() == "VIDEO":
@@ -21,24 +25,33 @@ def baixar_video():
                 'format': 'bestvideo[height<=1080][vcodec^=avc1][ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]', #[vcodec^=avc1] força a baixar um video com a resolução avc1 ao inves da av1 case possivel
                 'outtmpl': f'{pasta_destino}/%(playlist)s/%(title)s.%(ext)s', 
                 'merge_output_format': 'mp4',
+                'ffmpeg_location': ffmpeg_path,
             }
         else: 
             ydl_opts = {
                 'format': 'bestvideo[height<=1080][vcodec^=avc1][ext=mp4]+bestaudio[ext=m4a]/best[ext=mp4]',
                 'outtmpl': f'{pasta_destino}/%(title)s.%(ext)s', 
                 'merge_output_format': 'mp4',
+                'ffmpeg_location': ffmpeg_path,
             }
 
     elif cbox.get() == "MUSICA":
         if checkBox.get() == 1:
             ydl_opts = {
                 'format': 'bestaudio/best', 
-                'outtmpl': f'{pasta_destino}/%(playlist)s/%(title)s.mp3',
+                'outtmpl': f'{pasta_destino}/%(playlist)s/%(title)s.%(ext)s',
+                'ffmpeg_location': ffmpeg_path,
+                'postprocessors': [{
+                'key': 'FFmpegExtractAudio',
+                'preferredcodec': 'mp3',
+                'preferredquality': '192',
+                }],
             }
         else:
             ydl_opts = {
-                'format': 'bestaudio/best', 
-                'outtmpl': f'{pasta_destino}/%(title)s.mp3',
+                'format': 'bestaudio[ext=m4a]/bestaudio', 
+                'outtmpl': f'{pasta_destino}/%(title)s.%(ext)s',
+                'ffmpeg_location': ffmpeg_path,
             }
 
     try:
@@ -91,11 +104,11 @@ label3.pack(pady=10)
 
 
 
-labelcopy = ctk.CTkLabel(app, text="@Author: DIOGO LEITE \n@Version: 0.5", text_color="#b3b3b3")
+labelcopy = ctk.CTkLabel(app, text="@Author: DIOGO LEITE \n@Version: 0.7", text_color="#b3b3b3")
 labelcopy.pack(pady=(20, 10))
 
 # Iniciar APP
 app.mainloop()
 
-# @Version: 0.5
+# @Version: 0.7
 # @Author: Diogo Leite
