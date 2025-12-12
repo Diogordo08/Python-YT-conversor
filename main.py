@@ -1,7 +1,15 @@
 import os
+import sys
 import yt_dlp
 import customtkinter as ctk
 from tkinter import filedialog
+
+# Função global
+def resource_path(relative_path):
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative_path)
+    return os.path.join(os.path.dirname(__file__), relative_path)
+
 
 # Funcoes 
 def mudar_aparencia(value):
@@ -15,7 +23,7 @@ def baixar_video():
     pasta_destino = filedialog.askdirectory(title="Selecione a pasta de destino")
 
     
-    ffmpeg_path = os.path.join(os.path.dirname(__file__), "ffmpeg", "ffmpeg.exe")
+    ffmpeg_path = resource_path(os.path.join("ffmpeg"))
 
     url = tb.get()
     
@@ -61,7 +69,8 @@ def baixar_video():
         label3.configure(text="SUCESSO", text_color="#1fcf00")
 
     except Exception as e:
-        label3.configure(text="FALHA", text_color="#cf0a00")
+        label3.configure(text=f"FALHA \n {e}", text_color="#cf0a00")
+        print(e)
 
 
 # Config aparencia
@@ -104,7 +113,7 @@ label3.pack(pady=10)
 
 
 
-labelcopy = ctk.CTkLabel(app, text="@Author: DIOGO LEITE \n@Version: 0.7", text_color="#b3b3b3")
+labelcopy = ctk.CTkLabel(app, text="@Author: DIOGO LEITE \n@Version: 0.8", text_color="#b3b3b3")
 labelcopy.pack(pady=(20, 10))
 
 # Iniciar APP
